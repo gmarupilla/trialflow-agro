@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "name-of-the-project"
+version = "0.0.1"
+description = "description"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+
+authors = [
+  { name = "Gnaneswara (Akhil) Marupilla" }
+]
+
+keywords = ["geospatial", "agriculture", "raster", "climate", "workflow"]
+
+dependencies = [
+  "numpy",
+  "pandas",
+  "geopandas",
+  "pyyaml",
+  "pydantic>=2.0"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "pytest-cov",
+  "ruff",
+]
+
+[project.urls]
+Homepage = "https://github.com/gmarupilla/<PROJECT_PATH>"
+"Bug Tracker" = "https://github.com/gmarupilla/<PROJECT_PATH>/issues"
+
+[tool.setuptools]
+packages = ["src"]
