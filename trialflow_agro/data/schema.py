@@ -4,7 +4,7 @@ Data schema definitions for trialflow-agro.
 
 from typing import Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 
 REQUIRED_COLUMNS = [
@@ -46,6 +46,7 @@ class TrialRow(BaseModel):
     lat: Optional[float] = None
     lon: Optional[float] = None
 
-    class Config:
-        allow_population_by_field_name = True
-        extra = "allow"
+    model_config = ConfigDict(
+        populate_by_name=True,
+        extra="allow",
+    )

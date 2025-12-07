@@ -1,115 +1,94 @@
 """
 Typer-based CLI entry point for trialflow-agro.
 
-This module defines the CLI structure and top-level commands.
-The actual analysis pipeline is not implemented yet; this
-provides the interface and basic behavior for:
-
-- trialflow-agro fit
-- trialflow-agro report
+Commands:
+- trialflow-agro fit    → run the analysis pipeline and write results.json
+- trialflow-agro report → build a simple HTML report from results.json
 """
 
+from __future__ import annotations
+
 from pathlib import Path
+from typing import Optional
+
 import typer
+
+from trialflow_agro.pipeline import Pipeline
+from trialflow_agro.reporting.report_builder import ReportBuilder
 
 app = typer.Typer(
     name="trialflow-agro",
-    help="Reproducible workflow for analyzing on-farm agricultural trials.",
+    help="Reproducible summary workflows for on-farm agricultural trials.",
 )
 
 
 @app.command()
 def fit(
-    config: Path = typer.Option(
+    config: Path = typer.Argument(
         ...,
-        "--config",
-        "-c",
-        exists=True,
-        readable=True,
-        help="Path to the YAML configuration file.",
+        help="Path to trialflow-agro YAML config file.",
     ),
-    data: Path = typer.Option(
-        ...,
-        "--data",
-        "-d",
-        exists=True,
-        readable=True,
-        help="Path to the trial dataset (CSV or Parquet).",
-    ),
-    out: Path = typer.Option(
-        Path("results"),
+    out: Optional[Path] = typer.Option(
+        None,
         "--out",
         "-o",
-        help="Directory to write analysis outputs.",
+        help="Optional override for results directory "
+        "(defaults to config.output.directory).",
     ),
 ) -> None:
     """
-    Run the trial analysis workflow.
+    Run the trialflow-agro analysis pipeline.
 
-    Steps (to be implemented later):
-    - Load and validate config
-    - Load trial dataset
-    - Build and fit model
-    - Save results to output directory
+    This will:
+    - load and validate the YAML config
+    - load and validate the trial dataset
+    - compute overall / per-product / grouped summaries
+    - compute basic diagnostics
+    - write results.json under the chosen output directory
     """
-    typer.echo("Starting trialflow-agro fit workflow...\n")
+    typer.echo("[trialflow-agro] Starting fit workflow...")
+    typer.echo(f"  Config: {config}")
+    if out is not None:
+        typer.echo(f"  Output override: {out}")
 
-    typer.echo(f"Config file: {config}")
-    typer.echo(f"Dataset:     {data}")
-    typer.echo(f"Output dir:  {out}")
+    pipeline = Pipeline(config_path=config, output_dir=out)
+    pipeline.run()
 
-    out.mkdir(parents=True, exist_ok=True)
-
-    typer.echo("\n[NOTE] Analysis pipeline is not implemented yet.")
-    typer.echo("       This command currently runs as a placeholder.\n")
+    typer.echo(f"[trialflow-agro] Completed. Results written to: {pipeline.output_dir}")
 
 
 @app.command()
 def report(
-    results: Path = typer.Option(
+    results: Path = typer.Argument(
         Path("results"),
-        "--results",
-        "-r",
-        exists=True,
-        file_okay=False,
-        dir_okay=True,
-        readable=True,
-        help="Directory containing analysis results.",
+        help="Directory containing results.json (defaults to ./results).",
     ),
     out: Path = typer.Option(
-        Path("report.html"),
+        Path("trialflow-report.html"),
         "--out",
         "-o",
-        help="Path to the generated report file.",
-    ),
-    format: str = typer.Option(
-        "html",
-        "--format",
-        "-f",
-        help="Output format for the report (html, md, etc.).",
+        help="Path for the generated HTML report.",
     ),
 ) -> None:
     """
-    Generate a report from previously computed results.
+    Build a simple HTML report from results.json.
 
-    Steps (to be implemented later):
-    - Load saved model/inference results
-    - Compute summaries + diagnostics
-    - Render plots & tables
-    - Export final report
+    The report includes:
+    - basic dataset diagnostics
+    - overall yield summary
+    - per-product summaries
+    - optional grouped summaries (based on config.model.groups)
     """
-    typer.echo("Starting trialflow-agro report workflow...\n")
+    typer.echo("[trialflow-agro] Building report...")
+    typer.echo(f"  Results directory: {results}")
+    typer.echo(f"  Output file:       {out}")
 
-    typer.echo(f"Results directory: {results}")
-    typer.echo(f"Output file:       {out}")
-    typer.echo(f"Format:            {format}")
+    builder = ReportBuilder(results_dir=results)
+    builder.render(out_path=out)
 
-    typer.echo("\n[NOTE] Report generation is not implemented yet.")
-    typer.echo("       This command currently runs as a placeholder.\n")
+    typer.echo(f"[trialflow-agro] Report written to: {out}")
 
 
 def main() -> None:
-    """
-    Entry point for `trialflow-agro` console script.
-    """
+    """Console script entrypoint."""
     app()

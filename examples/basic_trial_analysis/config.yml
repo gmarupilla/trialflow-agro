@@ -1,0 +1,15 @@
+data:
+  # Path is resolved from the repo root when you run trialflow-agro
+  path: examples/basic_trial_analysis/data.csv
+
+model:
+  id: basic_trial_summary
+  # Summary groups: per-product and per-region
+  groups:
+    - product
+    - region
+  min_records_per_group: 2
+
+output:
+  # Where results.json and other outputs will be written
+  directory: examples/basic_trial_analysis/output

@@ -9,8 +9,11 @@ Ties together:
 - writing results.json
 """
 
+from __future__ import annotations
+
 import json
 from pathlib import Path
+from typing import Optional
 
 from trialflow_agro.config.schema import ConfigLoader, TrialflowConfig
 from trialflow_agro.data.loaders import TrialDataLoader
@@ -20,17 +23,39 @@ from trialflow_agro.models.hierarchical import TrialModel
 
 
 class Pipeline:
-    def __init__(self, config_path: Path, data_path: Path, output_dir: Path):
+    """
+    High-level runner for a single trialflow-agro analysis.
+
+    - Reads YAML config
+    - Loads data from config.data.path
+    - Builds TrialModel and runs TrialInference
+    - Computes basic diagnostics
+    - Writes results.json under the chosen output directory
+    """
+
+    def __init__(self, config_path: Path, output_dir: Optional[Path] = None) -> None:
         self.config_path = config_path
-        self.data_path = data_path
-        self.output_dir = output_dir
+        # Optional CLI override; if None we use config.output.directory
+        self._output_dir_override = output_dir
+        self._output_dir: Optional[Path] = None
+
+    @property
+    def output_dir(self) -> Path:
+        """
+        Final output directory used for this run.
+        Valid only after `run()` has been called.
+        """
+        if self._output_dir is None:
+            raise RuntimeError("Pipeline.run() has not been executed yet.")
+        return self._output_dir
 
     def run(self) -> None:
         # Load config
         cfg: TrialflowConfig = ConfigLoader().load(self.config_path)
 
-        # Load data
-        df = TrialDataLoader().load(self.data_path)
+        # Load data based purely on config (config-driven workflow)
+        data_path = cfg.data.path
+        df = TrialDataLoader().load(data_path)
 
         # Build model spec & run inference
         model = TrialModel(cfg.model)
@@ -43,13 +68,16 @@ class Pipeline:
         # Diagnostics
         diagnostics = compute_diagnostics(df)
 
-        # Save results
-        self.output_dir.mkdir(parents=True, exist_ok=True)
-        (self.output_dir / "results.json").write_text(
+        # Decide output directory: CLI override or config default
+        out_dir = self._output_dir_override or cfg.output.directory
+        self._output_dir = out_dir
+
+        out_dir.mkdir(parents=True, exist_ok=True)
+        (out_dir / "results.json").write_text(
             json.dumps(
                 {
-                    "config": cfg.model_dump(),
-                    "inference": inference_result.model_dump(),
+                    "config": cfg.model_dump(mode="json"),
+                    "inference": inference_result.model_dump(mode="json"),
                     "diagnostics": diagnostics,
                 },
                 indent=2,

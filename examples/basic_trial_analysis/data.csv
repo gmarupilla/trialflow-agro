@@ -1,0 +1,17 @@
+field_id,farm_id,region,year,product,yield,treatment,soil_class,lat,lon
+F101,Farm1,North,2024,Hybrid_A,60.2,standard,Loam,39.10,-94.60
+F101,Farm1,North,2024,Hybrid_A,62.1,standard,Loam,39.10,-94.60
+F101,Farm1,North,2024,Hybrid_B,64.0,standard,Loam,39.10,-94.60
+F101,Farm1,North,2024,Hybrid_B,63.5,standard,Loam,39.10,-94.60
+F102,Farm1,North,2024,Hybrid_A,58.9,lowN,Clay,39.15,-94.55
+F102,Farm1,North,2024,Hybrid_B,61.7,lowN,Clay,39.15,-94.55
+F102,Farm1,North,2024,Hybrid_C,59.8,lowN,Clay,39.15,-94.55
+F102,Farm1,North,2024,Hybrid_C,60.3,lowN,Clay,39.15,-94.55
+F201,Farm2,South,2024,Hybrid_A,67.4,standard,Sandy,38.90,-94.70
+F201,Farm2,South,2024,Hybrid_B,69.1,standard,Sandy,38.90,-94.70
+F201,Farm2,South,2024,Hybrid_C,70.3,standard,Sandy,38.90,-94.70
+F201,Farm2,South,2024,Hybrid_C,71.0,standard,Sandy,38.90,-94.70
+F202,Farm2,South,2024,Hybrid_A,64.8,lowN,Sandy,38.95,-94.75
+F202,Farm2,South,2024,Hybrid_B,66.0,lowN,Sandy,38.95,-94.75
+F202,Farm2,South,2024,Hybrid_C,68.5,lowN,Sandy,38.95,-94.75
+F202,Farm2,South,2024,Hybrid_C,67.9,lowN,Sandy,38.95,-94.75

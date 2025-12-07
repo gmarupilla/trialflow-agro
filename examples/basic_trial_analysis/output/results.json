@@ -1,0 +1,137 @@
+{
+  "config": {
+    "data": {
+      "path": "examples/basic_trial_analysis/data.csv"
+    },
+    "model": {
+      "groups": [
+        "product",
+        "region"
+      ],
+      "min_records_per_group": 2
+    },
+    "output": {
+      "directory": "examples/basic_trial_analysis/output",
+      "save_intermediate": true
+    }
+  },
+  "inference": {
+    "overall": {
+      "group_values": {},
+      "n": 16,
+      "mean_yield": 64.71875,
+      "std_yield": 3.991861512293899,
+      "min_yield": 58.9,
+      "max_yield": 71.0
+    },
+    "by_product": [
+      {
+        "group_values": {
+          "product": "Hybrid_A"
+        },
+        "n": 5,
+        "mean_yield": 62.68000000000001,
+        "std_yield": 3.447752891377224,
+        "min_yield": 58.9,
+        "max_yield": 67.4
+      },
+      {
+        "group_values": {
+          "product": "Hybrid_B"
+        },
+        "n": 5,
+        "mean_yield": 64.85999999999999,
+        "std_yield": 2.8218788067526894,
+        "min_yield": 61.7,
+        "max_yield": 69.1
+      },
+      {
+        "group_values": {
+          "product": "Hybrid_C"
+        },
+        "n": 6,
+        "mean_yield": 66.3,
+        "std_yield": 4.974736173909126,
+        "min_yield": 59.8,
+        "max_yield": 71.0
+      }
+    ],
+    "by_groups": [
+      {
+        "group_values": {
+          "product": "Hybrid_A",
+          "region": "North"
+        },
+        "n": 3,
+        "mean_yield": 60.400000000000006,
+        "std_yield": 1.6093476939431093,
+        "min_yield": 58.9,
+        "max_yield": 62.1
+      },
+      {
+        "group_values": {
+          "product": "Hybrid_A",
+          "region": "South"
+        },
+        "n": 2,
+        "mean_yield": 66.1,
+        "std_yield": 1.8384776310850295,
+        "min_yield": 64.8,
+        "max_yield": 67.4
+      },
+      {
+        "group_values": {
+          "product": "Hybrid_B",
+          "region": "North"
+        },
+        "n": 3,
+        "mean_yield": 63.06666666666666,
+        "std_yield": 1.2096831541082687,
+        "min_yield": 61.7,
+        "max_yield": 64.0
+      },
+      {
+        "group_values": {
+          "product": "Hybrid_B",
+          "region": "South"
+        },
+        "n": 2,
+        "mean_yield": 67.55,
+        "std_yield": 2.192031021678293,
+        "min_yield": 66.0,
+        "max_yield": 69.1
+      },
+      {
+        "group_values": {
+          "product": "Hybrid_C",
+          "region": "North"
+        },
+        "n": 2,
+        "mean_yield": 60.05,
+        "std_yield": 0.3535533905932738,
+        "min_yield": 59.8,
+        "max_yield": 60.3
+      },
+      {
+        "group_values": {
+          "product": "Hybrid_C",
+          "region": "South"
+        },
+        "n": 4,
+        "mean_yield": 69.42500000000001,
+        "std_yield": 1.4637281168304421,
+        "min_yield": 67.9,
+        "max_yield": 71.0
+      }
+    ]
+  },
+  "diagnostics": {
+    "n_records": 16,
+    "n_fields": 4,
+    "n_farms": 2,
+    "n_products": 3,
+    "years": [
+      2024
+    ]
+  }
+}
