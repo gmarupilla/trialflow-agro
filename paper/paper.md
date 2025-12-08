@@ -1,5 +1,5 @@
 ---
-title: "A title"
+title: "TrialFlowAgro: A Reproducible Workflow for Agricultural Field-Trial Analysis"
 tags:
   - Python
   - geospatial
@@ -17,7 +17,7 @@ date: 2025-01-01
 bibliography: biblio.bib
 ---
 
-# trialflow-agro: A Reproducible Workflow for Agricultural Field-Trial Analysis
+# TrialFlowAgro: A Reproducible Workflow for Agricultural Field-Trial Analysis
 
 ## Summary
 
@@ -28,9 +28,11 @@ agronomists, and data scientists to compare experiments across years, locations,
 
 `trialflow-agro` is a lightweight, configuration-driven Python toolkit that provides a 
 reproducible workflow for loading, validating, summarizing, and reporting on agricultural 
-field-trial datasets. It standardizes basic trial processing using a consistent data schema, 
-provides robust summary statistics and diagnostics, and generates machine-readable outputs 
-that integrate easily into downstream modeling pipelines or research workflows.
+field-trial datasets. It builds on the scientific Python ecosystem, including NumPy 
+\citep{harris2020array}, pandas \citep{mckinney2010data}, and GeoPandas \citep{jordahl2022geopandas}. 
+It standardizes basic trial processing using a consistent data schema, provides robust summary 
+statistics and diagnostics, and generates machine-readable outputs suitable for downstream 
+modeling pipelines or research workflows.
 
 ## Statement of Need
 
@@ -38,20 +40,21 @@ Field-trial analysis is a critical part of agricultural R&D and product evaluati
 there is no domain-specific, reproducible tool that supports:
 
 - a consistent schema for plot-level or field-level trial data,  
-- validated and documented preprocessing,  
+- validated and documented preprocessing using structured schemas such as Pydantic \citep{pydantic},  
 - configuration-driven workflows that eliminate ad-hoc notebooks,  
 - and standardized diagnostic and summary outputs compatible with modern data pipelines.
 
 Most organizations rely on custom scripts or spreadsheets that vary across teams and years, 
 making it difficult to compare experiments or ensure methodological consistency. General-purpose 
-statistical libraries (e.g., PyMC, Stan, Statsmodels, R’s lme4) provide powerful modeling 
-capabilities but do not offer an end-to-end workflow for agricultural trials: schema enforcement, 
-data validation, reproducible configuration files, automated summaries, and report generation.
+statistical libraries—such as PyMC \citep{pymc}, Stan \citep{stan}, Statsmodels \citep{seabold2010statsmodels}, 
+and the lme4 mixed-effects modeling framework \citep{bates2015lme4}—offer powerful modeling capabilities 
+but do not provide an end-to-end workflow for agricultural trials: schema enforcement, data validation, 
+reproducible configuration files, automated summaries, and report generation.
 
 `trialflow-agro` fills this gap by offering a simple, reproducible, and extensible workflow 
 tailored to agricultural field experiments. It is designed to be a foundation for more advanced 
-Bayesian or hierarchical modeling, while already providing substantial value as a standardization 
-and reproducibility layer.
+Bayesian or hierarchical modeling approaches—common in agricultural statistics \citep{piepho2012agtrial}—
+while already providing substantial value as a standardization and reproducibility layer.
 
 ## Software Description
 
@@ -59,13 +62,14 @@ and reproducibility layer.
 
 `trialflow-agro` provides:
 
-- **Validated data loading**, using a Pydantic schema (`TrialRow`) and explicit required columns.  
+- **Validated data loading**, using a Pydantic schema (`TrialRow`) and explicit required columns \citep{pydantic}.  
 - **Config-driven workflows**, enabling trial analyses to be reproduced via a single YAML file.  
 - **Summary inference**, including overall statistics, grouped summaries (e.g., by product or region),  
   and dataset-level diagnostics.  
 - **Machine-readable outputs**, stored in JSON for downstream modeling or dashboards.  
-- **HTML report generation**, supporting simple, reproducible communication of trial results.  
-- **A CLI interface** (`trialflow-agro fit`, `trialflow-agro report`) for running end-to-end analyses.
+- **HTML report generation**, built on Jinja2 templating \citep{jinja2}, supporting simple, reproducible 
+  communication of trial results.  
+- **A CLI interface**, built using Typer \citep{typer}, for running end-to-end analyses.
 
 ### Architecture
 
@@ -118,10 +122,11 @@ The report is a minimal, human-readable HTML summary of the trial.
 
 ## State of the Field
 Several statistical tools are used in agricultural research, including:
-- PyMC and Stan for Bayesian modeling,
-- Statsmodels for regression and ANOVA workflows,
-- lme4 (R) for mixed-effects modeling,
-- proprietary agronomic tools used within industry.
+- PyMC for Bayesian modeling \citep{pymc},
+- Stan for probabilistic modeling \citep{stan},
+- Statsmodels for regression and ANOVA workflows \citep{seabold2010statsmodels},
+- lme4 for mixed-effects modeling in R \citep{bates2015lme4},
+- ASReml for linear mixed models in plant and animal breeding \citep{asreml}.
 
 While these frameworks offer powerful modeling abstractions, they do not provide the
 domain-specific workflow needed for reproducible agricultural trial analysis: standardized
@@ -134,7 +139,8 @@ future Bayesian or hierarchical trial models in a transparent and extensible way
 
 ## Acknowledgements
 
-We thank the open-source scientific Python community, including Pandas, Pydantic,
-Typer, and Jinja2 contributors, whose tools make this project possible.
+We thank the open-source scientific Python community, including NumPy \citep{harris2020array},
+Pandas \citep{mckinney2010data}, GeoPandas \citep{jordahl2022geopandas}, Pydantic \citep{pydantic},
+Typer \citep{typer}, and Jinja2 \citep{jinja2} contributors, whose tools make this project possible.
 
 ## References
