@@ -1,6 +1,9 @@
 # Variables
 PYTHON = .venv/bin/python
 PIP = .venv/bin/pip
+RUFF = .venv/bin/ruff
+BLACK = .venv/bin/black
+
 
 .PHONY: help venv install dev test run build clean docker-build docker-run lint lint-fix
 
@@ -51,9 +54,9 @@ clean:
 	find . -name "__pycache__" -exec rm -rf {} +
 
 lint:
-	ruff check trialflow_agro tests
-	black --check trialflow_agro tests
+	$(RUFF) check trialflow_agro tests
+	$(BLACK) --check trialflow_agro tests
 
 lint-fix:
-	ruff check trialflow_agro tests --fix
-	black trialflow_agro tests
+	$(RUFF) check trialflow_agro tests --fix
+	$(BLACK) trialflow_agro tests
